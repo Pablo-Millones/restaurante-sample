@@ -422,7 +422,32 @@
         © 2025 Gourmet Restaurant. Todos los derechos reservados.
       </div>
     </footer>
+<script>
+  const form = document.getElementById('reserva-form');
+const mensaje = document.getElementById('mensaje-reserva');
 
+form.addEventListener('submit', e => {
+  e.preventDefault(); // Evita que se recargue la página
+
+  const data = new FormData(form);
+  const params = new URLSearchParams(data);
+
+  fetch('https://script.google.com/macros/s/AKfycbycOdeYi_XSQMQwNH5VwHTuvpHnSNtauZUT_Jmn_5B_7xBlUUEDkZh5QAY0LGzeBsRC-w/exec', {
+    method: 'POST',
+    body: params
+  })
+  .then(res => res.text())
+  .then(texto => {
+    mensaje.textContent = texto; // Muestra el mensaje de éxito
+    form.reset(); // Limpia el formulario
+  })
+  .catch(err => {
+    mensaje.textContent = '❌ Ocurrió un error. Intenta nuevamente.';
+    console.error(err);
+  });
+});
+
+</script>
 </body>
 
 </html>
