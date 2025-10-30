@@ -327,12 +327,12 @@
             <p class="mt-4 text-base leading-relaxed text-subtle-light dark:text-subtle-dark">Asegure su mesa para una
               noche inolvidable.</p>
           </div>
-         <form id="reserva-form"
+<form id="reserva-form"
       action="https://script.google.com/macros/s/AKfycbzmTq_tp7NnmPI95nQMp3_oCz55RLLH5t6hh4Zj1OLFQn1ryhhYJN3v9MFyW8R4TXsxXw/exec"
       method="POST"
       target="_blank"
-      onsubmit="enviarWhatsApp()"
       class="space-y-6">
+
 
   <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
     <div>
@@ -417,21 +417,33 @@
 
 <script>
   // Enviar reserva a Google Sheets
-  document.getElementById("reserva-form").addEventListener("submit", async (e) => {
-    e.preventDefault();
+document.getElementById("reserva-form").addEventListener("submit", async (e) => {
+  e.preventDefault();
+  const data = {
+    fecha: document.getElementById("date").value,
+    hora: document.getElementById("time").value,
+    personas: document.getElementById("guests").value,
+    nombre: document.getElementById("name").value,
+    email: document.getElementById("email").value,
+    telefono: document.getElementById("telefono").value
+  };
 
-    const data = {
-      fecha: document.getElementById("date").value,
-      hora: document.getElementById("time").value,
-      personas: document.getElementById("guests").value,
-      nombre: document.getElementById("name").value,
-      email: document.getElementById("email").value,
-      telefono: document.getElementById("telefono").value
-    };
+  const scriptURL = "https://script.google.com/macros/s/AKfycbzmTq_tp7NnmPI95nQMp3_oCz55RLLH5t6hh4Zj1OLFQn1ryhhYJN3v9MFyW8R4TXsxXw/exec";
 
-    // 👉 reemplaza con tu URL real del script de Google Apps
-    const scriptURL = "https://script.google.com/macros/s/AKfycbzmTq_tp7NnmPI95nQMp3_oCz55RLLH5t6hh4Zj1OLFQn1ryhhYJN3v9MFyW8R4TXsxXw/exec";
-  });
+  try {
+    await fetch(scriptURL, {
+      method: "POST",
+      body: JSON.stringify(data),
+      headers: { "Content-Type": "application/json" }
+    });
+    alert("✅ Reserva enviada correctamente. ¡Gracias!");
+    e.target.reset();
+  } catch (error) {
+    alert("❌ Error al enviar la reserva. Intenta de nuevo.");
+    console.error(error);
+  }
+});
+
 </script>
 
 </body>
