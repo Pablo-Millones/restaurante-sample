@@ -118,7 +118,7 @@
       </div>
     </header>
     <main class="flex flex-col">
-      <section class="relative" id="top">
+      <section id="inicio" class="relative" >
         <div
           class="flex min-h-[calc(100vh-68px)] flex-col gap-6 bg-cover bg-center bg-no-repeat items-center justify-center p-4 text-center"
           data-alt="A beautifully plated signature dish from the restaurant, viewed from above, with soft, artistic lighting."
@@ -344,7 +344,7 @@
             </p>
           </div>
 
-          <form id="reserva-form"
+<form id="reserva-form"
             action="https://script.google.com/macros/s/AKfycbxf8PccYQXd8xaR8GCx60tj6XQVeN_obXCYRmsDIvgfPKNnicN5te4KoMQcXjaEHx4_Lw/exec"
             method="POST" onsubmit="return enviarReserva(this)">
 
@@ -397,16 +397,17 @@
               </button>
             </div>
           </form>
-          <!-- Modal de confirmación -->
-          <div id="modal-confirm"
-            class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center hidden z-50">
-            <div class="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-lg max-w-sm text-center">
-              <h2 class="text-2xl font-bold mb-4 text-primary">¡Reserva Confirmada!</h2>
-              <p class="mb-6">Gracias por reservar. Revisa tu correo para la confirmación.</p>
-              <button onclick="cerrarModal()"
-                class="bg-primary text-white px-4 py-2 rounded-lg hover:opacity-90 transition-opacity">Cerrar</button>
-            </div>
-          </div>
+
+<!-- Modal de confirmación -->
+<div id="modal-confirm" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center hidden z-50">
+  <div class="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-lg max-w-sm text-center">
+    <h2 class="text-2xl font-bold mb-4 text-primary">¡Reserva Confirmada!</h2>
+    <p class="mb-6">Gracias por reservar. Revisa tu correo para la confirmación.</p>
+    <button onclick="cerrarModal()" class="bg-primary text-white px-4 py-2 rounded-lg hover:opacity-90 transition-opacity">Cerrar</button>
+  </div>
+</div>
+
+
         </div>
       </section>
 
@@ -457,8 +458,8 @@ document.addEventListener('DOMContentLoaded', () => {
   document.querySelectorAll('a[href^="#"]').forEach(enlace => {
     enlace.addEventListener('click', e => {
       e.preventDefault();
-      const destino = enlace.getAttribute('href') === '#' 
-        ? document.body 
+      const destino = enlace.getAttribute('href') === '#'
+        ? document.body
         : document.querySelector(enlace.getAttribute('href'));
       if (destino) destino.scrollIntoView({ behavior: 'smooth', block: 'start' });
     });
@@ -478,51 +479,46 @@ document.addEventListener('DOMContentLoaded', () => {
       // Mostrar menú
       navMenu.classList.remove('hidden');
       setTimeout(() => navMenu.classList.remove('translate-x-full'), 10);
-      title.classList.add('opacity-0', '-translate-x-10', 'transition-all', 'duration-300');
-
-      // Animar los enlaces uno a uno
-      links.forEach((link, i) => {
-        setTimeout(() => {
-          link.classList.remove('opacity-0', 'translate-x-5');
-          link.classList.add('opacity-100', 'translate-x-0', 'transition-all', 'duration-500');
-        }, i * 100);
-      });
-
-      burgerBtn.textContent = 'close';
+      title.classList.add('opacity-0', '-translate-x-10', 'transition-all', 'duration-500');
     } else {
-      // Cerrar menú
+      // Ocultar menú
       navMenu.classList.add('translate-x-full');
-      title.classList.remove('opacity-0', '-translate-x-10');
-
-      links.forEach(link => {
-        link.classList.add('opacity-0', 'translate-x-5');
-        link.classList.remove('opacity-100', 'translate-x-0');
-      });
-
       setTimeout(() => navMenu.classList.add('hidden'), 500);
-      burgerBtn.textContent = 'menu';
+      title.classList.remove('opacity-0', '-translate-x-10');
     }
   });
 
-  // ----- Cerrar menú al hacer click en un enlace -----
+  // ----- Cerrar menú al hacer clic en un enlace -----
   links.forEach(link => {
     link.addEventListener('click', () => {
-      // Solo cerrar si está abierto
-      if (!navMenu.classList.contains('hidden')) {
-        navMenu.classList.add('translate-x-full');
-        title.classList.remove('opacity-0', '-translate-x-10');
-        setTimeout(() => navMenu.classList.add('hidden'), 500);
-        burgerBtn.textContent = 'menu';
-      }
+      navMenu.classList.add('translate-x-full');
+      setTimeout(() => navMenu.classList.add('hidden'), 500);
+      title.classList.remove('opacity-0', '-translate-x-10');
     });
   });
 
 });
+function enviarReserva(form) {
+  const iframe = document.createElement("iframe");
+  iframe.style.display = "none";
+  iframe.name = "submit-frame";
+  document.body.appendChild(iframe);
+  form.target = "submit-frame";
+
+  setTimeout(() => {
+    document.getElementById("modal-confirm").classList.remove("hidden");
+    form.reset();
+    document.body.removeChild(iframe);
+  }, 1000);
+
+  return true;
+}
+
+function cerrarModal() {
+  document.getElementById("modal-confirm").classList.add("hidden");
+}
+
 </script>
-
-
-
-
 
 </body>
 
