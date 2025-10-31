@@ -329,11 +329,9 @@
       </p>
     </div>
 
-    <form id="reserva-form"
+<form id="reserva-form" 
           action="https://script.google.com/macros/s/AKfycbxf8PccYQXd8xaR8GCx60tj6XQVeN_obXCYRmsDIvgfPKNnicN5te4KoMQcXjaEHx4_Lw/exec"
-          method="POST"
-          target="_blank"
-          class="space-y-6">
+           method="POST" onsubmit="return enviarReserva(this)">
 
       <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
         <div>
@@ -422,7 +420,26 @@
         © 2025 Gourmet Restaurant. Todos los derechos reservados.
       </div>
     </footer>
+<script>
+function enviarReserva(form) {
+  // Abrimos un iframe temporal para enviar sin recargar la página
+  const iframe = document.createElement('iframe');
+  iframe.style.display = 'none';
+  iframe.name = 'submit-frame';
+  document.body.appendChild(iframe);
 
+  form.target = 'submit-frame';
+
+  // Esperamos un momento y mostramos popup
+  setTimeout(() => {
+    alert('✅ Reserva enviada correctamente. Revisa tu correo para la confirmación.');
+    form.reset();
+    document.body.removeChild(iframe);
+  }, 1000);
+
+  return true; // permite que el formulario se envíe
+}
+</script>
 </body>
 
 </html>
