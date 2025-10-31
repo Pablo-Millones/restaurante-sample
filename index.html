@@ -83,17 +83,30 @@
     </h2>
   </div>
 
-<nav id="nav-menu"
-     class="fixed inset-0 md:static hidden md:flex flex-col md:flex-row items-center gap-6 md:gap-9 
-     bg-background-light/95 dark:bg-background-dark/95 md:bg-transparent 
-     md:translate-x-0 translate-x-full transition-transform duration-500 ease-in-out 
-     justify-center md:justify-start z-40 p-10 md:p-0">
-  <a href="#">Inicio</a>
-  <a href="#carta">Carta</a>
-  <a href="#reservas">Reservas</a>
-  <a href="#galeria">Galería</a>
-  <a href="#contacto">Contacto</a>
+<!-- 🖥️ Menú de escritorio -->
+<nav class="hidden md:flex items-center gap-8 text-gray-800 dark:text-gray-100">
+  <a href="#inicio" class="hover:text-primary transition">Inicio</a>
+  <a href="#carta" class="hover:text-primary transition">Carta</a>
+  <a href="#reservas" class="hover:text-primary transition">Reservas</a>
+  <a href="#galeria" class="hover:text-primary transition">Galería</a>
+  <a href="#contacto" class="hover:text-primary transition">Contacto</a>
 </nav>
+
+<!-- 📱 Menú móvil (overlay animado) -->
+<nav id="nav-menu"
+     class="fixed inset-0 hidden flex flex-col items-center justify-center gap-6
+            w-screen h-screen z-50 transform translate-x-full transition-transform duration-500 md:hidden"
+     style="background-color: rgba(18, 18, 18, 0.95); backdrop-filter: blur(10px); color: #bcbcbc;">
+  <a href="#inicio" class="nav-link opacity-80 text-xl text-white hover:opacity-100 transition">Inicio</a>
+  <a href="#carta" class="nav-link opacity-80 text-xl text-white hover:opacity-100 transition">Carta</a>
+  <a href="#reservas" class="nav-link opacity-80 text-xl text-white hover:opacity-100 transition">Reservas</a>
+  <a href="#galeria" class="nav-link opacity-80 text-xl text-white hover:opacity-100 transition">Galería</a>
+  <a href="#contacto" class="nav-link opacity-80 text-xl text-white hover:opacity-100 transition">Contacto</a>
+</nav>
+
+
+
+
       <div class="flex items-center gap-4">
         <a href="#reservas"
           class="hidden md:flex min-w-[84px] ... bg-primary text-text-light justify-center items-center h-10 px-4 rounded-lg font-bold hover:opacity-90 transition-opacity">
@@ -437,82 +450,78 @@
         © 2025 Gourmet Restaurant. Todos los derechos reservados.
       </div>
     </footer>
-    <script>
-function scrollSuave() {
-  const enlaces = document.querySelectorAll('a[href^="#"]');
+<script>
+document.addEventListener('DOMContentLoaded', () => {
 
-  enlaces.forEach(enlace => {
+  // ----- Scroll suave -----
+  document.querySelectorAll('a[href^="#"]').forEach(enlace => {
     enlace.addEventListener('click', e => {
       e.preventDefault();
       const destino = enlace.getAttribute('href') === '#' 
         ? document.body 
         : document.querySelector(enlace.getAttribute('href'));
-      if (destino) {
-        destino.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      if (destino) destino.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    });
+  });
+
+  // ----- Elementos -----
+  const burgerBtn = document.getElementById('btn-menu');
+  const navMenu = document.getElementById('nav-menu');
+  const title = document.getElementById('header-title');
+  const links = document.querySelectorAll('#nav-menu a');
+
+  // ----- Abrir / cerrar menú -----
+  burgerBtn.addEventListener('click', () => {
+    const isHidden = navMenu.classList.contains('hidden');
+
+    if (isHidden) {
+      // Mostrar menú
+      navMenu.classList.remove('hidden');
+      setTimeout(() => navMenu.classList.remove('translate-x-full'), 10);
+      title.classList.add('opacity-0', '-translate-x-10', 'transition-all', 'duration-300');
+
+      // Animar los enlaces uno a uno
+      links.forEach((link, i) => {
+        setTimeout(() => {
+          link.classList.remove('opacity-0', 'translate-x-5');
+          link.classList.add('opacity-100', 'translate-x-0', 'transition-all', 'duration-500');
+        }, i * 100);
+      });
+
+      burgerBtn.textContent = 'close';
+    } else {
+      // Cerrar menú
+      navMenu.classList.add('translate-x-full');
+      title.classList.remove('opacity-0', '-translate-x-10');
+
+      links.forEach(link => {
+        link.classList.add('opacity-0', 'translate-x-5');
+        link.classList.remove('opacity-100', 'translate-x-0');
+      });
+
+      setTimeout(() => navMenu.classList.add('hidden'), 500);
+      burgerBtn.textContent = 'menu';
+    }
+  });
+
+  // ----- Cerrar menú al hacer click en un enlace -----
+  links.forEach(link => {
+    link.addEventListener('click', () => {
+      // Solo cerrar si está abierto
+      if (!navMenu.classList.contains('hidden')) {
+        navMenu.classList.add('translate-x-full');
+        title.classList.remove('opacity-0', '-translate-x-10');
+        setTimeout(() => navMenu.classList.add('hidden'), 500);
+        burgerBtn.textContent = 'menu';
       }
     });
   });
-}
 
-
-      document.addEventListener('DOMContentLoaded', scrollSuave);
-
-      function enviarReserva(form) {
-        const iframe = document.createElement('iframe');
-        iframe.style.display = 'none';
-        iframe.name = 'submit-frame';
-        document.body.appendChild(iframe);
-
-        form.target = 'submit-frame';
-
-        setTimeout(() => {
-          document.getElementById('modal-confirm').classList.remove('hidden');
-          form.reset();
-          document.body.removeChild(iframe);
-        }, 1000);
-
-        return true;
-      }
-
-      function cerrarModal() {
-        document.getElementById('modal-confirm').classList.add('hidden');
-      }
-
-const btnMenu = document.getElementById('btn-menu');
-const navMenu = document.getElementById('nav-menu');
-const headerTitle = document.getElementById('header-title');
-const iconMenu = document.getElementById('icon-menu');
-
-let menuAbierto = false;
-
-btnMenu.addEventListener('click', () => {
-  menuAbierto = !menuAbierto;
-
-  if (menuAbierto) {
-    // Mostrar el menú deslizándose desde la derecha
-    navMenu.classList.remove('hidden');
-    setTimeout(() => navMenu.classList.remove('translate-x-full'), 10);
-
-    // Deslizar el título hacia la izquierda y desvanecer
-    headerTitle.classList.add('-translate-x-20', 'opacity-0');
-
-    // Cambiar icono a "close"
-    iconMenu.textContent = 'close';
-  } else {
-    // Ocultar menú deslizándolo hacia la derecha
-    navMenu.classList.add('translate-x-full');
-    setTimeout(() => navMenu.classList.add('hidden'), 500);
-
-    // Volver a mostrar el título
-    headerTitle.classList.remove('-translate-x-20', 'opacity-0');
-
-    // Volver al icono de menú
-    iconMenu.textContent = 'menu';
-  }
 });
+</script>
 
 
-    </script>
+
 
 
 </body>
