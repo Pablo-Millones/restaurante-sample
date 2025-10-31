@@ -86,24 +86,25 @@
         <h2 class="text-lg font-bold leading-tight tracking-[-0.015em]">Gourmet Restaurant</h2>
       </div>
       <nav class="hidden md:flex items-center gap-9">
-        <a class="text-sm font-medium leading-normal hover:text-primary transition-colors" href="#">Inicio</a>
+        <a class="text-sm font-medium leading-normal hover:text-primary transition-colors" href="#top">Inicio</a>
         <a class="text-sm font-medium leading-normal hover:text-primary transition-colors" href="#carta">Carta</a>
         <a class="text-sm font-medium leading-normal hover:text-primary transition-colors" href="#reservas">Reservas</a>
         <a class="text-sm font-medium leading-normal hover:text-primary transition-colors" href="#galeria">Galería</a>
         <a class="text-sm font-medium leading-normal hover:text-primary transition-colors" href="#contacto">Contacto</a>
       </nav>
       <div class="flex items-center gap-4">
-        <button
-          class="hidden md:flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-10 px-4 bg-primary text-text-light text-sm font-bold leading-normal tracking-[0.015em] hover:opacity-90 transition-opacity">
-          <span class="truncate">Reservar Mesa</span>
-        </button>
+        <a href="#reservas"
+          class="hidden md:flex min-w-[84px] ... bg-primary text-text-light justify-center items-center h-10 px-4 rounded-lg font-bold hover:opacity-90 transition-opacity">
+          Reservar Mesa
+        </a>
+
         <button class="md:hidden p-2 rounded-lg hover:bg-primary/20 transition-colors">
           <span class="material-symbols-outlined">menu</span>
         </button>
       </div>
     </header>
     <main class="flex flex-col">
-      <section class="relative">
+      <section class="relative" id="top">
         <div
           class="flex min-h-[calc(100vh-68px)] flex-col gap-6 bg-cover bg-center bg-no-repeat items-center justify-center p-4 text-center"
           data-alt="A beautifully plated signature dish from the restaurant, viewed from above, with soft, artistic lighting."
@@ -320,65 +321,80 @@
           </div>
         </div>
       </section>
-<section class="py-16 sm:py-24 bg-background-light dark:bg-background-dark" id="reservas">
-  <div class="max-w-2xl mx-auto px-4 sm:px-6 lg:px-8">
-    <div class="text-center mb-12">
-      <h2 class="text-3xl font-bold leading-tight tracking-[-0.033em] md:text-4xl">Haga su Reserva</h2>
-      <p class="mt-4 text-base leading-relaxed text-subtle-light dark:text-subtle-dark">
-        Asegure su mesa para una noche inolvidable.
-      </p>
-    </div>
+      <section class="py-16 sm:py-24 bg-background-light dark:bg-background-dark" id="reservas">
+        <div class="max-w-2xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div class="text-center mb-12">
+            <h2 class="text-3xl font-bold leading-tight tracking-[-0.033em] md:text-4xl">Haga su Reserva</h2>
+            <p class="mt-4 text-base leading-relaxed text-subtle-light dark:text-subtle-dark">
+              Asegure su mesa para una noche inolvidable.
+            </p>
+          </div>
 
-<form id="reserva-form" 
-          action="https://script.google.com/macros/s/AKfycbxf8PccYQXd8xaR8GCx60tj6XQVeN_obXCYRmsDIvgfPKNnicN5te4KoMQcXjaEHx4_Lw/exec"
-           method="POST" onsubmit="return enviarReserva(this)">
+          <form id="reserva-form"
+            action="https://script.google.com/macros/s/AKfycbxf8PccYQXd8xaR8GCx60tj6XQVeN_obXCYRmsDIvgfPKNnicN5te4KoMQcXjaEHx4_Lw/exec"
+            method="POST" onsubmit="return enviarReserva(this)">
 
-      <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
-        <div>
-          <label for="date" class="block text-sm font-medium text-subtle-light dark:text-subtle-dark">Fecha</label>
-          <input type="date" id="date" name="fecha" required
-                 class="mt-1 block w-full rounded-lg border-border-light dark:border-border-dark bg-background-light dark:bg-background-dark/50 shadow-sm focus:border-primary focus:ring-primary">
-        </div>
-        <div>
-          <label for="time" class="block text-sm font-medium text-subtle-light dark:text-subtle-dark">Hora</label>
-          <input type="time" id="time" name="hora" required
-                 class="mt-1 block w-full rounded-lg border-border-light dark:border-border-dark bg-background-light dark:bg-background-dark/50 shadow-sm focus:border-primary focus:ring-primary">
-        </div>
-      </div>
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+              <div>
+                <label for="date"
+                  class="block text-sm font-medium text-subtle-light dark:text-subtle-dark">Fecha</label>
+                <input type="date" id="date" name="fecha" required
+                  class="mt-1 block w-full rounded-lg border-border-light dark:border-border-dark bg-background-light dark:bg-background-dark/50 shadow-sm focus:border-primary focus:ring-primary">
+              </div>
+              <div>
+                <label for="time" class="block text-sm font-medium text-subtle-light dark:text-subtle-dark">Hora</label>
+                <input type="time" id="time" name="hora" required
+                  class="mt-1 block w-full rounded-lg border-border-light dark:border-border-dark bg-background-light dark:bg-background-dark/50 shadow-sm focus:border-primary focus:ring-primary">
+              </div>
+            </div>
 
-      <div>
-        <label for="guests" class="block text-sm font-medium text-subtle-light dark:text-subtle-dark">Número de Comensales</label>
-        <input type="number" id="guests" name="personas" min="1" max="10" placeholder="2" required
-               class="mt-1 block w-full rounded-lg border-border-light dark:border-border-dark bg-background-light dark:bg-background-dark/50 shadow-sm focus:border-primary focus:ring-primary">
-      </div>
+            <div>
+              <label for="guests" class="block text-sm font-medium text-subtle-light dark:text-subtle-dark">Número de
+                Comensales</label>
+              <input type="number" id="guests" name="personas" min="1" max="10" placeholder="2" required
+                class="mt-1 block w-full rounded-lg border-border-light dark:border-border-dark bg-background-light dark:bg-background-dark/50 shadow-sm focus:border-primary focus:ring-primary">
+            </div>
 
-      <div>
-        <label for="name" class="block text-sm font-medium text-subtle-light dark:text-subtle-dark">Nombre Completo</label>
-        <input type="text" id="name" name="nombre" placeholder="Su nombre" required
-               class="mt-1 block w-full rounded-lg border-border-light dark:border-border-dark bg-background-light dark:bg-background-dark/50 shadow-sm focus:border-primary focus:ring-primary">
-      </div>
+            <div>
+              <label for="name" class="block text-sm font-medium text-subtle-light dark:text-subtle-dark">Nombre
+                Completo</label>
+              <input type="text" id="name" name="nombre" placeholder="Su nombre" required
+                class="mt-1 block w-full rounded-lg border-border-light dark:border-border-dark bg-background-light dark:bg-background-dark/50 shadow-sm focus:border-primary focus:ring-primary">
+            </div>
 
-      <div>
-        <label for="email" class="block text-sm font-medium text-subtle-light dark:text-subtle-dark">Correo Electrónico</label>
-        <input type="email" id="email" name="email" placeholder="su.email@ejemplo.com" required
-               class="mt-1 block w-full rounded-lg border-border-light dark:border-border-dark bg-background-light dark:bg-background-dark/50 shadow-sm focus:border-primary focus:ring-primary">
-      </div>
+            <div>
+              <label for="email" class="block text-sm font-medium text-subtle-light dark:text-subtle-dark">Correo
+                Electrónico</label>
+              <input type="email" id="email" name="email" placeholder="su.email@ejemplo.com" required
+                class="mt-1 block w-full rounded-lg border-border-light dark:border-border-dark bg-background-light dark:bg-background-dark/50 shadow-sm focus:border-primary focus:ring-primary">
+            </div>
 
-      <div>
-        <label for="telefono" class="block text-sm font-medium text-subtle-light dark:text-subtle-dark">Teléfono</label>
-        <input type="tel" id="telefono" name="telefono" placeholder="+569 99999999" required
-               class="mt-1 block w-full rounded-lg border-border-light dark:border-border-dark bg-background-light dark:bg-background-dark/50 shadow-sm focus:border-primary focus:ring-primary">
-      </div>
+            <div>
+              <label for="telefono"
+                class="block text-sm font-medium text-subtle-light dark:text-subtle-dark">Teléfono</label>
+              <input type="tel" id="telefono" name="telefono" placeholder="+569 99999999" required
+                class="mt-1 block w-full rounded-lg border-border-light dark:border-border-dark bg-background-light dark:bg-background-dark/50 shadow-sm focus:border-primary focus:ring-primary">
+            </div>
 
-      <div>
-        <button type="submit"
+            <div>
+              <button type="submit"
                 class="w-full flex justify-center py-3 px-4 border border-transparent rounded-lg shadow-sm text-base font-bold text-text-light bg-primary hover:opacity-90 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary transition-opacity">
-          Confirmar Reserva
-        </button>
-      </div>
-    </form>
-  </div>
-</section>
+                Confirmar Reserva
+              </button>
+            </div>
+          </form>
+          <!-- Modal de confirmación -->
+          <div id="modal-confirm"
+            class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center hidden z-50">
+            <div class="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-lg max-w-sm text-center">
+              <h2 class="text-2xl font-bold mb-4 text-primary">¡Reserva Confirmada!</h2>
+              <p class="mb-6">Gracias por reservar. Revisa tu correo para la confirmación.</p>
+              <button onclick="cerrarModal()"
+                class="bg-primary text-white px-4 py-2 rounded-lg hover:opacity-90 transition-opacity">Cerrar</button>
+            </div>
+          </div>
+        </div>
+      </section>
 
     </main>
     <footer id="contacto" class="bg-background-dark text-background-light py-12">
@@ -420,26 +436,49 @@
         © 2025 Gourmet Restaurant. Todos los derechos reservados.
       </div>
     </footer>
-<script>
-function enviarReserva(form) {
-  // Abrimos un iframe temporal para enviar sin recargar la página
-  const iframe = document.createElement('iframe');
-  iframe.style.display = 'none';
-  iframe.name = 'submit-frame';
-  document.body.appendChild(iframe);
+    <script>
+function scrollSuave() {
+  const enlaces = document.querySelectorAll('a[href^="#"]');
 
-  form.target = 'submit-frame';
-
-  // Esperamos un momento y mostramos popup
-  setTimeout(() => {
-    alert('✅ Reserva enviada correctamente. Revisa tu correo para la confirmación.');
-    form.reset();
-    document.body.removeChild(iframe);
-  }, 1000);
-
-  return true; // permite que el formulario se envíe
+  enlaces.forEach(enlace => {
+    enlace.addEventListener('click', e => {
+      e.preventDefault();
+      const destino = enlace.getAttribute('href') === '#' 
+        ? document.body 
+        : document.querySelector(enlace.getAttribute('href'));
+      if (destino) {
+        destino.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    });
+  });
 }
-</script>
+
+
+      document.addEventListener('DOMContentLoaded', scrollSuave);
+
+      function enviarReserva(form) {
+        const iframe = document.createElement('iframe');
+        iframe.style.display = 'none';
+        iframe.name = 'submit-frame';
+        document.body.appendChild(iframe);
+
+        form.target = 'submit-frame';
+
+        setTimeout(() => {
+          document.getElementById('modal-confirm').classList.remove('hidden');
+          form.reset();
+          document.body.removeChild(iframe);
+        }, 1000);
+
+        return true;
+      }
+
+      function cerrarModal() {
+        document.getElementById('modal-confirm').classList.add('hidden');
+      }
+    </script>
+
+
 </body>
 
 </html>
